@@ -8,6 +8,7 @@ vim.opt.tabstop = 4
 vim.opt.termguicolors = true
 vim.opt.completeopt = { "menuone", "noselect" }
 vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
+vim.opt.pumheight = 1;
 
 -- Keymaps for LSP
 vim.keymap.set("n", "<space>f", vim.lsp.buf.format, {})
