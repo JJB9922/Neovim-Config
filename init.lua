@@ -16,6 +16,8 @@ vim.opt.colorcolumn = "100"
 -- Keymaps for LSP
 vim.keymap.set("n", "<space>f", vim.lsp.buf.format, {})
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
+vim.keymap.set("n", "<leader>e", vim.diagnostic.goto_next)
+vim.keymap.set("n", "<leader>E", vim.diagnostic.goto_prev)
 
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(ev)
