@@ -34,6 +34,8 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end,
 })
 
+vim.keymap.set("n", "<leader>w", ":w<CR>", {})
+
 -- Install lazy.nvim if not present
 local lazypath = vim.fn.stdpath("data") .. "\\lazy\\lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
