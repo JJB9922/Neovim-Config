@@ -9,6 +9,8 @@ vim.opt.termguicolors = true
 vim.opt.completeopt = { "menuone", "noselect" }
 vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
 vim.opt.pumheight = 1;
+vim.opt.signcolumn = "yes";
+
 
 -- Keymaps for LSP
 vim.keymap.set("n", "<space>f", vim.lsp.buf.format, {})
@@ -18,6 +20,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(ev)
         local opts = { buffer = ev.buf }
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+    end,
+})
+
+-- Format on save
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*",
+    callback = function()
+        vim.lsp.buf.format({ async = true })
     end,
 })
 
@@ -62,7 +72,11 @@ require("lazy").setup({
                     entries = { name = "custom", selection_order = "near_cursor" }
                 },
                 window = {
-                    completion = cmp.config.window.bordered({ hidden = true }),
+		    completion = cmp.config.window.bordered({
+        	    winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+        	    col_offset = -3,
+       		    side_padding = 0,
+   		    }),
                     documentation = cmp.config.window.bordered({ hidden = true }),
                 },
                 experimental = {
