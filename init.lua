@@ -85,7 +85,7 @@ require("lazy").setup({
                     },
                 },
                 completion = {
-                    keyword_length = 2, 
+                    keyword_length = 4, 
                     completeopt = "menu,menuone,noselect",
                 },
                 formatting = {
