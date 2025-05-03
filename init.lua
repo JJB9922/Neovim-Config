@@ -10,7 +10,8 @@ vim.opt.completeopt = { "menuone", "noselect" }
 vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
 vim.opt.pumheight = 1;
 vim.opt.signcolumn = "yes";
-
+vim.opt.wrap = false;
+vim.opt.colorcolumn = "100"
 
 -- Keymaps for LSP
 vim.keymap.set("n", "<space>f", vim.lsp.buf.format, {})
@@ -45,6 +46,11 @@ vim.opt.rtp:prepend(lazypath)
 -- Plugin setup
 require("lazy").setup({
     { "neovim/nvim-lspconfig" },
+    {
+        "windwp/nvim-autopairs",
+        event = "InsertEnter",
+        config = true
+    },
     {
         "hrsh7th/nvim-cmp",
         dependencies = {
