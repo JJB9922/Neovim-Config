@@ -152,6 +152,11 @@ require("lspconfig").clangd.setup({
 
 require("lspconfig").zls.setup({})
 
+-- Keybinding to open adhoc term
+vim.keymap.set("n", "<leader>t", function()
+  vim.cmd("split | terminal")
+end, {})
+
 -- Keybinding to run build.bat in the current directory in a horizontal split
 vim.keymap.set('n', '<F1>', function()
     local cwd = vim.fn.getcwd() 
