@@ -183,3 +183,8 @@ end, { desc = "Run first .exe in build directory in a split" })
 vim.keymap.set('n', '<C-w>q', function()
     vim.cmd('q')
 end, { desc = "Close terminal window" })
+
+-- Keybinding to open new vert buffer
+vim.keymap.set("n", "<leader>v", function()
+    vim.cmd("vsplit | enew")
+end, { desc = "Vertical split and open new buffer" })
