@@ -134,6 +134,7 @@ require("lazy").setup({
             telescope.setup()
             vim.keymap.set("n", "<leader>sf", require("telescope.builtin").find_files, { desc = "Find files" })
             vim.keymap.set("n", "<leader>sg", require("telescope.builtin").live_grep, { desc = "Live grep" })
+            vim.keymap.set("n", "<leader>sb", require("telescope.builtin").buffers, { desc = "List open buffers" })
         end,
     },
     {
@@ -142,6 +143,27 @@ require("lazy").setup({
         config = function()
             vim.cmd("colorscheme rose-pine")
         end
+    },
+
+    {
+"stevearc/conform.nvim",
+   opts = {
+      notify_on_error = false,
+      -- Odinfmt gets its configuration from odinfmt.json. It defaults
+      -- writing to stdout but needs to be told to read from stdin.
+      formatters = {
+         odinfmt = {
+            -- Change where to find the command if it isn't in your path.
+            command = "odinfmt",
+            args = { "-stdin" },
+            stdin = true,
+         },
+      },
+      -- and instruct conform to use odinfmt.
+      formatters_by_ft = {
+         odin = { "odinfmt" },
+      },
+   },
     }
 })
 
@@ -151,6 +173,7 @@ require("lspconfig").clangd.setup({
 })
 
 require("lspconfig").zls.setup({})
+require("lspconfig").ols.setup({})
 
 -- Keybinding to open adhoc term
 vim.keymap.set("n", "<leader>t", function()
@@ -180,11 +203,19 @@ vim.keymap.set('n', '<F3>', function()
 end, { desc = "Run first .exe in build directory in a split" })
 
 -- Keybinding to close terminal windows easily
-vim.keymap.set('n', '<C-w>q', function()
-    vim.cmd('q')
-end, { desc = "Close terminal window" })
+vim.keymap.set("n", "<C-w>q", function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    vim.cmd("q") -- close the window
+    vim.schedule(function()
+        if vim.fn.buflisted(bufnr) == 1 then
+            vim.api.nvim_buf_delete(bufnr, { force = true })
+        end
+    end)
+end, { desc = "Close terminal window and buffer" })
 
 -- Keybinding to open new vert buffer
 vim.keymap.set("n", "<leader>v", function()
     vim.cmd("vsplit | enew")
 end, { desc = "Vertical split and open new buffer" })
+
+
